@@ -1,11 +1,9 @@
-# homebrew-formulas
+<div align="center">
+
+# vmsimon's Homebrew Tap
 My personal Homebrew tap housing formulas for all my Homebrew projects.
 
-
-[![Build](https://github.com/vmsimon/homebrew-formulas/workflows/build/badge.svg)](https://github.com/vmsimon/homebrew-formulas/actions)
-[![Licence](https://img.shields.io/github/license/justintime50/homebrew-formulas)](LICENSE)
-
-<img src="https://raw.githubusercontent.com/vmsimon/assets/main/src/homebrew-formulas/showcase.png" alt="Showcase">
+<img src="https://raw.githubusercontent.com/vmsimon/homebrew-formulas/HEAD/showcase.png" alt="Showcase">
 
 </div>
 
@@ -17,10 +15,10 @@ This repos is completely automated and maintained via [Homebrew Releaser](https:
 
 ```bash
 # Setup tap
-brew tap justintime50/formulas
+brew tap vmsimon/formulas
 
 # Check the tap for available formulas
-brew search justintime50/formulas
+brew search vmsimon/formulas
 ```
 
 <!-- project_table_start -->
