@@ -11,16 +11,10 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Fetch upstream release version
-        run: |
-          curl -sL https://api.github.com/repos/fi-ts/cloudctl/releases/latest | \
-          jq -r ".tag_name" > release-versions/cloudctl-latest.txt
-      - name: Set upstream relase version as pipline variable
-        id: vars
-        run: echo "version=$(sed 's/^v\(.*\)/\1/' release-versions/cloudctl-latest.txt )" >> $GITHUB_OUTPUT
+        id: release
+        run: echo "version=$(curl -sL https://api.github.com/repos/fi-ts/cloudctl/releases/latest | jq -r ".tag_name" | sed 's/^v\(.*\)/\1/')" >> $GITHUB_OUTPUT
       - name: Change upstream release version in cloudctl.rb
-        env:
-          VERSION: ${{ steps.vars.outputs.version }}
-        run: sed -i 's/release = \".*\"/release = \"${{ steps.vars.outputs.version }}\"/' formula/cloudctl.rb
+        run: sed -i 's/release = \".*\"/release = \"${{ steps.release.outputs.version }}\"/' formula/cloudctl.rb
       - name: Check for modified files
         id: git-check
         run: echo modified=$([ -z "`git status --porcelain`" ] && echo "false" || echo "true") >> $GITHUB_OUTPUT
