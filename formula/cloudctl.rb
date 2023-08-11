@@ -1,5 +1,5 @@
 class Cloudctl < Formula
-  release = "0.11.12"
+  release = "0.11.13"
   desc "Commandline client for Kubernetes as a Service and more!"
   homepage "https://github.com/fi-ts/cloudctl"
   url "https://github.com/fi-ts/cloudctl/"
@@ -8,21 +8,27 @@ class Cloudctl < Formula
   if OS.mac?
     if Hardware::CPU.arm?
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-darwin-arm64"
+      sha256 "#sha256-darwin-arm64"
       def install
-            bin.install "cloudctl-darwin-arm64" => "cloudctl"
+        bin.install "cloudctl-darwin-arm64" => "cloudctl"
       end
+    end
+  end
     else
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-darwin-amd64"
+      sha256 "#sha256-darwin-amd64" 
       def install
-            bin.install "cloudctl-darwin-amd64" => "cloudctl"
+        bin.install "cloudctl-darwin-amd64" => "cloudctl"
       end
     end
   elsif OS.linux?
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-linux-amd64"
+      sha256 "#sha256-linux-amd64"
       def install
-            bin.install "cloudctl-linux-amd64" => "cloudctl"
+        bin.install "cloudctl-linux-arm64" => "cloudctl"
       end
   end
+
   def caveats
     <<~EOS
     
