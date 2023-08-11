@@ -1,5 +1,5 @@
 class Cloudctl < Formula
-  release = "0.11.12"
+  release = "0.11.13"
   desc "Commandline client for Kubernetes as a Service and more!"
   homepage "https://github.com/fi-ts/cloudctl"
   url "https://github.com/fi-ts/cloudctl/"
@@ -34,7 +34,7 @@ class Cloudctl < Formula
   def caveats
     <<~EOS
     
-        To activate the completions, add the following to your .zshrc:
+        To activate completions, add the following to your .zshrc:
 
           [[ -e $(brew --prefix)/bin/cloudctl ]] && eval "$(cloudctl completion zsh)"
         
@@ -43,3 +43,4 @@ class Cloudctl < Formula
     EOS
   end
 end
+
