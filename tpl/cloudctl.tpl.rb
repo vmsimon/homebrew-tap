@@ -12,8 +12,6 @@ class Cloudctl < Formula
       def install
         bin.install "cloudctl-darwin-arm64" => "cloudctl"
       end
-    end
-  end
     else
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-darwin-amd64"
       sha256 "#sha256-darwin-amd64" 
@@ -22,17 +20,21 @@ class Cloudctl < Formula
       end
     end
   elsif OS.linux?
+    if Hardware::CPU.arm?
+      #atm not supported
+    else
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-linux-amd64"
       sha256 "#sha256-linux-amd64"
       def install
-        bin.install "cloudctl-linux-arm64" => "cloudctl"
+        bin.install "cloudctl-linux-amd64" => "cloudctl"
       end
+    end
   end
 
   def caveats
     <<~EOS
     
-        To activate the completions, add the following to your .zshrc:
+        To activate completions, add the following to your .zshrc:
 
           [[ -e $(brew --prefix)/bin/cloudctl ]] && eval "$(cloudctl completion zsh)"
         
@@ -41,3 +43,4 @@ class Cloudctl < Formula
     EOS
   end
 end
+
