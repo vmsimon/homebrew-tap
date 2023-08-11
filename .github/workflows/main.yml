@@ -19,6 +19,7 @@ jobs:
         id: git-check
         run: echo modified=$([ -z "`git status --porcelain`" ] && echo "false" || echo "true") >> $GITHUB_OUTPUT
       - name: Get SHA256 Hashes
+        if: steps.git-check.outputs.modified == 'true'
         id: sha256
         run: for i in cloudctl-darwin-arm64 cloudctl-darwin-amd64 cloudctl-linux-amd64; do curl -fsSL https://github.com/fi-ts/cloudctl/releases/download/v0.11.13/$i -o $i; sha256sum $i | awk '{printf "%s=%s\n",$2,$1}' >> $GITHUB_OUTPUT ;done;
       - name: Update cloudctl.rb
