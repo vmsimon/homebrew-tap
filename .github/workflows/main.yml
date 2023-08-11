@@ -20,18 +20,9 @@ jobs:
         run: echo modified=$([ -z "`git status --porcelain`" ] && echo "false" || echo "true") >> $GITHUB_OUTPUT
       - name: Get SHA256 Hashes
         id: sha256
-        run: |
-          curl -fsSL -o cloudctl-darwin-arm64 https://github.com/fi-ts/cloudctl/releases/download/v${{ steps.release.outputs.version }}/cloudctl-darwin-arm64
-          echo darwin-arm64=$(sha256sum cloudctl-darwin-arm64) >> $GITHUB_OUTPUT
-          curl -fsSL -o cloudctl-darwin-amd64 https://github.com/fi-ts/cloudctl/releases/download/v${{ steps.release.outputs.version }}/cloudctl-darwin-amd64
-          echo darwin-amd64=$(sha256sum cloudctl-darwin-amd64) >> $GITHUB_OUTPUT
-          curl -fsSL -o cloudctl-linux-amd64 https://github.com/fi-ts/cloudctl/releases/download/v${{ steps.release.outputs.version }}/cloudctl-linux-amd64
-          echo linux-amd64=$(sha256sum cloudctl-lunix-amd64) >> $GITHUB_OUTPUT
+        run: for i in cloudctl-darwin-arm64 cloudctl-darwin-amd64 cloudctl-linux-amd64; do curl -fsSL https://github.com/fi-ts/cloudctl/releases/download/v0.11.13/$i -o $i; sha256sum $i | awk '{printf "%s=%s\n",$2,$1}' >> $GITHUB_OUTPUT ;done;
       - name: Show SHA256 Hashes
-        run: |
-          echo ${{ steps.sha256.outputs.darwin-arm64 }}
-          echo ${{ steps.sha256.outputs.darwin-amd64 }}
-          echo ${{ steps.sha256.outputs.linux-amd64 }}
+        run: for i in cloudctl-darwin-arm64 cloudctl-darwin-amd64 cloudctl-linux-amd64; do echo ${{steps.sha256.outputs.$i}}; done
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
         run: |
