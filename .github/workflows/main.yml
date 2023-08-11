@@ -21,11 +21,9 @@ jobs:
       - name: Get SHA256 Hashes
         id: sha256
         run: for i in cloudctl-darwin-arm64 cloudctl-darwin-amd64 cloudctl-linux-amd64; do curl -fsSL https://github.com/fi-ts/cloudctl/releases/download/v0.11.13/$i -o $i; sha256sum $i | awk '{printf "%s=%s\n",$2,$1}' >> $GITHUB_OUTPUT ;done;
-      - name: Show SHA256 Hashes
-        run: | 
-          echo "${{ steps.sha256.outputs.cloudctl-darwin-arm64 }}"
-          echo "${{ steps.sha256.outputs.cloudctl-darwin-amd64 }}"
-          echo "${{ steps.sha256.outputs.cloudctl-linux-amd64 }}
+      - name: Update cloudctl.rb
+        if: steps.git-check.outputs.modified == 'true'
+        run: sed  -e 's/#version/${{ steps.release.outputs.version }}/g' -e 's/#darwin-arm64/${{ steps.sha256.outputs.cloudctl-darwin-arm64 }}/g' -e 's/#darwin-adm64/${{ steps.sha256.outputs.cloudctl-darwin-amd64 }}/g' -e 's/#linux-amd64/${{ steps.sha256.outputs.cloudctl-linux-amd64 }}/g' tpl/cloudctl.tpl > formula/cloudctl.rb
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
         run: |
