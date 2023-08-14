@@ -13,10 +13,10 @@ Goal of this repos is to do all jobs completely automated, was inspired by [Home
 
 ```bash
 # Setup tap
-brew tap vmsimon/formulas
+brew tap vmsimon/tap
 
 # Check the tap for available formulas
-brew search vmsimon/formulas
+brew search vmsimon/tap
 ```
 
 <!-- project_table_start -->
