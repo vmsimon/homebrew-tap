@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -24,6 +24,6 @@ jobs:
           release_name: Release ${{ github.ref }}
           body: |
             Changes in this Release
-            - New version of cloudctl eleased by fi-ts/cloudctl
+            - New version of cloudctl released by fi-ts
           draft: false
           prerelease: false
