@@ -1,5 +1,5 @@
 class Cloudctl < Formula
-  release = "0.11.13"
+  release = "0.12.0"
   desc "Commandline client for Kubernetes as a Service and more!"
   homepage "https://github.com/fi-ts/cloudctl"
   url "https://github.com/fi-ts/cloudctl/"
