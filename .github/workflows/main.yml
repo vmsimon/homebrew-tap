@@ -24,9 +24,11 @@ jobs:
         run: for i in cloudctl-darwin-arm64 cloudctl-darwin-amd64 cloudctl-linux-amd64; do curl -fsSL https://github.com/fi-ts/cloudctl/releases/download/v${{ steps.release.outputs.version }}/$i -o $i; sha256sum $i | awk '{printf "%s=%s\n",$2,$1}' >> $GITHUB_OUTPUT ;done;
       - name: Update cloudctl.rb
         if: steps.git-check.outputs.modified == 'true'
+        id: update_homebrew
         run: sed  -e 's/#version/${{ steps.release.outputs.version }}/g' -e 's/#sha256-darwin-arm64/${{ steps.sha256.outputs.cloudctl-darwin-arm64 }}/g' -e 's/#sha256-darwin-amd64/${{ steps.sha256.outputs.cloudctl-darwin-amd64 }}/g' -e 's/#sha256-linux-amd64/${{ steps.sha256.outputs.cloudctl-linux-amd64 }}/g' tpl/cloudctl.rb > formula/cloudctl.rb
       - name: Commit latest release version
         if: steps.git-check.outputs.modified == 'true'
+        id: commit_changes
         run: |
           git config --global user.name 'vmsimon'
           git config --global user.email 'vmsimon@users.noreply.github.com'
@@ -34,3 +36,27 @@ jobs:
           git commit -am "New fi-ts/cloudctl release version"
           git tag -a "v${{ steps.release.outputs.version }}" -m "Tag new fi-ts/cloudctl release version"
           git push
+      - name: Create Release
+        if: steps.git-check.outputs.modified == 'true'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: v${{ steps.release.outputs.version }}
+          release_name: Release v${{ steps.release.outputs.version }}
+          body: |
+            Changes in this Release
+            - New version of cloudctl released by fi-ts
+          draft: false
+          prerelease: false
+      - name: Upload binaries to release
+        if: steps.git-check.outputs.modified == 'true'
+        id: upload_files
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: cloudctl-*
+          tag: v${{ steps.release.outputs.version }}
+          overwrite: true
+          file_glob: true
