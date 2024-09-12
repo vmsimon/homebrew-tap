@@ -1,5 +1,5 @@
 class Cloudctl < Formula
-  release = "0.12.22"
+  release = "0.13.0"
   desc "Commandline client for Kubernetes as a Service and more!"
   homepage "https://github.com/fi-ts/cloudctl"
   url "https://github.com/fi-ts/cloudctl/"
@@ -8,17 +8,17 @@ class Cloudctl < Formula
   if OS.mac?
     if Hardware::CPU.arm?
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-darwin-arm64"
-      sha256 "0549947b790f54c1da4ac5e1af3ec23b1aafbcda49166b6697f058bac07c3f01"
+      sha256 "3236a7daffb8ed11a69b22f5f2c60a1d4c1847cb50158c1d4da48867412003a8"
     else
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-darwin-amd64"
-      sha256 "be55fd68771ec139bba4ad031ba527ab8b146a068ce724206cc6cd150c3d9cd8" 
+      sha256 "b6d637a7a040d09a9e66990c5cf66b4a339dce2a7ce396b89074a0bf3f939b1c" 
     end
   elsif OS.linux?
     if Hardware::CPU.arm?
       #atm not supported
     else
       url "https://github.com/fi-ts/cloudctl/releases/download/v#{version}/cloudctl-linux-amd64"
-      sha256 "bcfe277bbd2a68f63246c0e1d0ab27992bbd5dc3e971b359f4d20e82623c25f9"
+      sha256 "f944dbff080aeb967606bdadfdadc148c516695c88e07ff32d34881fac1f229d"
     end
   end
 
