@@ -24,6 +24,8 @@ class Cloudctl < Formula
 
   def install
     bin.install Dir.glob("cloudctl-*").first => "cloudctl"
+
+    generate_completions_from_executable(bin/"cloudctl", "completion")
   end
 
   def caveats
