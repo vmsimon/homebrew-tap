@@ -28,17 +28,5 @@ class Cloudctl < Formula
     chmod 0555, bin/"cloudctl"
     generate_completions_from_executable(bin/"cloudctl", "completion")
   end
-
-  def caveats
-    <<~EOS
-    
-        To activate completions, add the following to your .zshrc:
-
-          [[ -e $(brew --prefix)/bin/cloudctl ]] && eval "$(cloudctl completion zsh)"
-        
-        There are also completions for bash and fish available.
-        
-    EOS
-  end
 end
 
